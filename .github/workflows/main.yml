@@ -1,77 +1,81 @@
-name: Recommended Movies App
+name: Build & Upload to Firebase (iOS + Android)
 
 on:
   push:
-    branches: [release]
+    branches: [release] # หรือเปลี่ยนเป็น main/dev ตามที่คุณต้องการ
 
 jobs:
   ios-build:
-    name: iOS Build & Firebase Upload
+    name: 🚀 iOS Build & Firebase Upload
     runs-on: macos-latest
 
     steps:
-      - name: Checkout Code
+      - name: 🧾 Checkout Code
         uses: actions/checkout@v3
 
-      - name: Setup Node
+      - name: 🔧 Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install Dependencies
+      - name: 📦 Install Dependencies
         run: yarn install
 
-      - name: Setup Ruby
+      - name: 💎 Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.1'
 
-      - name: Install Fastlane
+      - name: 🚀 Install Fastlane
         run: gem install fastlane -NV
 
-      - name: Install Pods
-        run: cd ios && pod install
+      - name: 📚 Install CocoaPods
+        run: pod install
+        working-directory: ios
 
-      - name: Run Fastlane (iOS)
-        run: cd ios && fastlane beta
+      - name: 🏗️ Run Fastlane (iOS)
+        run: fastlane beta
+        working-directory: ios
         env:
           FIREBASE_APP_ID: ${{ secrets.IOS_FIREBASE_APP_ID }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 
   android-build:
-    name: Android Build & Firebase Upload
+    name: 🤖 Android Build & Firebase Upload
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: 🧾 Checkout Code
         uses: actions/checkout@v3
 
-      - name: Setup Node
+      - name: 🔧 Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install Dependencies
+      - name: 📦 Install Dependencies
         run: yarn install
 
-      - name: Setup Java
+      - name: ☕️ Setup Java
         uses: actions/setup-java@v3
         with:
           java-version: 11
+          distribution: 'temurin'
 
-      - name: Setup Ruby
+      - name: 💎 Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.1'
 
-      - name: Install Fastlane
+      - name: 🚀 Install Fastlane
         run: gem install fastlane -NV
 
-      - name: Restore Keystore
+      - name: 🔐 Restore Keystore
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/release.keystore
 
-      - name: Run Fastlane (Android)
-        run: cd android && fastlane beta
+      - name: 🏗️ Run Fastlane (Android)
+        run: fastlane beta
+        working-directory: android
         env:
           FIREBASE_APP_ID: ${{ secrets.ANDROID_FIREBASE_APP_ID }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
