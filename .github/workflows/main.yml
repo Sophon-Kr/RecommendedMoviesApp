@@ -34,8 +34,8 @@ jobs:
         working-directory: ios
 
       - name: 🏗️ Run Fastlane (iOS)
-        run: fastlane beta
-        working-directory: ios
+        run: fastlane ios beta_ios
+        working-directory: fastlane
         env:
           FIREBASE_APP_ID: ${{ secrets.IOS_FIREBASE_APP_ID }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
@@ -74,8 +74,8 @@ jobs:
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/release.keystore
 
       - name: 🏗️ Run Fastlane (Android)
-        run: fastlane beta
-        working-directory: android
+        run: fastlane android beta_android
+        working-directory: fastlane
         env:
           FIREBASE_APP_ID: ${{ secrets.ANDROID_FIREBASE_APP_ID }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
