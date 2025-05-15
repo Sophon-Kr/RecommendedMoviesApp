@@ -4,7 +4,6 @@ platform :ios do
   desc "iOS build and upload to Firebase"
   lane :beta_ios do
     build_app(
-      workspace: "RecommendedMoviesApp.xcworkspace",
       scheme: "RecommendedMoviesApp",
       workspace: "../ios/RecommendedMoviesApp.xcworkspace",
       export_method: "ad-hoc",
