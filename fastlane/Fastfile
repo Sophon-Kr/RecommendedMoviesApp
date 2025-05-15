@@ -5,15 +5,16 @@ platform :ios do
   lane :beta_ios do
     build_app(
       scheme: "RecommendedMoviesApp",
+      workspace: "../ios/RecommendedMoviesApp.xcworkspace",
       export_method: "ad-hoc",
-      output_directory: "ios/build",
+      output_directory: "../ios/build",
       output_name: "RecommendedMoviesApp.ipa"
     )
 
     firebase_app_distribution(
       app: ENV["FIREBASE_APP_ID"],
       firebase_cli_token: ENV["FIREBASE_TOKEN"],
-      ipa_path: "ios/build/RecommendedMoviesApp.ipa",
+      ipa_path: "../ios/build/RecommendedMoviesApp.ipa",
       groups: "qa"
     )
   end
@@ -23,7 +24,7 @@ platform :android do
   desc "Android build and upload to Firebase"
   lane :beta_android do
     gradle(
-      project_dir: "android",
+      project_dir: "../android",
       task: "assemble",
       build_type: "Release"
     )
@@ -31,8 +32,9 @@ platform :android do
     firebase_app_distribution(
       app: ENV["FIREBASE_APP_ID"],
       firebase_cli_token: ENV["FIREBASE_TOKEN"],
-      apk_path: "android/app/build/outputs/apk/release/app-release.apk",
+      apk_path: "../android/app/build/outputs/apk/release/app-release.apk",
       groups: "qa"
     )
   end
 end
+
