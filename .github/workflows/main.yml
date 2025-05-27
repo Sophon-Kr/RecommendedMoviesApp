@@ -34,7 +34,7 @@ jobs:
         working-directory: ios
 
       - name: 🏗️ Run Fastlane (iOS)
-        run: fastlane ios beta_ios
+        run: bundle exec fastlane ios beta_ios
         working-directory: fastlane
         env:
           FIREBASE_APP_ID: ${{ secrets.IOS_FIREBASE_APP_ID }}
