@@ -6,17 +6,21 @@ platform :ios do
     build_app(
       scheme: "RecommendedMoviesApp",
       workspace: "./ios/RecommendedMoviesApp.xcworkspace",
-      export_method: "ad-hoc",
-      output_directory: "./ios/build",
-      output_name: "RecommendedMoviesApp.ipa"
+      # export_method: "ad-hoc",
+      # output_directory: "./ios/build",
+      # output_name: "RecommendedMoviesApp.ipa"
+      sdk: "iphonesimulator",
+      export_method: "development",
+      skip_package_ipa: true
     )
 
-    firebase_app_distribution(
-      app: ENV["FIREBASE_APP_ID"],
-      firebase_cli_token: ENV["FIREBASE_TOKEN"],
-      ipa_path: "./ios/build/RecommendedMoviesApp.ipa",
-      groups: "qa"
-    )
+    # firebase_app_distribution(
+    #   app: ENV["FIREBASE_APP_ID"],
+    #   firebase_cli_token: ENV["FIREBASE_TOKEN"],
+    #   ipa_path: "./ios/build/RecommendedMoviesApp.ipa",
+    #   groups: "qa"
+    # )
+    UI.message("✅ iOS Simulator build complete. Skipping Firebase upload.")
   end
 end
 
